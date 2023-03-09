@@ -35,7 +35,7 @@ export default class Square extends React.Component<IProperties, IState>
   {
     super(props)
     this.state = {
-      content:props.value.toString(),
+      content:props?.value?.toString() ?? '',
       clicked:false
     }
     // events:
