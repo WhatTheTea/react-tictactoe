@@ -58,7 +58,8 @@ export default class TicTacToe extends React.Component<IProps, IState>
       let winner = this.checkWinner(temp)
       if(winner !== null)
       {
-        console.log(`winner: ${winner == 0 ? 'X' : 'O'}`)
+        alert(`winner: ${winner === 0 ? 'X' : 'O'}`)
+        window.location.reload()
       }
 
       this.Squares = temp
