@@ -15,6 +15,10 @@ export default class TicTacToe extends React.Component<IProps, IState>
     {
       return this.state.squares
     }
+    private set Squares(val:EXO[])
+    {
+      this.setState(state => {return {squares: val}})
+    }
 
     constructor(props: IProps)
     {
@@ -48,8 +52,45 @@ export default class TicTacToe extends React.Component<IProps, IState>
 
     onSquareClick(id : number, xo : EXO) : void 
     {
-      
+      let squares = this.Squares
+      let temp = squares.slice(0)
+      temp[id] = xo
+      let winner = this.checkWinner(temp)
+      if(winner !== null)
+      {
+        console.log(`winner: ${winner == 0 ? 'X' : 'O'}`)
+      }
+
+      this.Squares = temp
     }
+
+    checkWinner(squares : EXO[]) : EXO | null
+    {
+      const lines = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+      ]
+      for (var line of lines)
+      {
+        let [s1,s2,s3] = line
+        let enum_sum = squares[s1] + squares[s2] + squares[s3]
+        switch (enum_sum) 
+        {
+          case 3:
+            return EXO.O
+          case 0:
+            return EXO.X
+        }
+      }
+      return null
+    }
+
 }
 
 

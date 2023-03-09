@@ -1,8 +1,13 @@
 import React from "react"
-
+export enum EXO
+{
+  X,
+  O
+}
 interface IProperties 
 {
-  value : string
+  id : number,
+  onClick : (id : number, xo : EXO) => void
 }
 interface IState
 {
@@ -12,21 +17,25 @@ interface IState
 
 export default class Square extends React.Component<IProperties, IState>
 {
-  // content
-  private get content() : string
+  public static next : EXO = EXO.X
+  /**
+   * Повертає або встановлює текст всередині квадрату.
+   * Через використання станів 
+   */
+  public get Content() : string
   {
     return this.state.content
   }
-  private set content(val:string)
+  private set Content(val:string)
   {
     this.setState(state => {return {content: val}})
   }
   // clicked
-  private get clicked() : boolean
+  public get Clicked() : boolean
   {
     return this.state.clicked
   }
-  private set clicked(val:boolean)
+  private set Clicked(val:boolean)
   {
     this.setState(state => {return {clicked: val}})
   }
@@ -35,7 +44,7 @@ export default class Square extends React.Component<IProperties, IState>
   {
     super(props)
     this.state = {
-      content:props?.value?.toString() ?? '',
+      content:'',
       clicked:false
     }
     // events:
@@ -44,16 +53,32 @@ export default class Square extends React.Component<IProperties, IState>
 
   handleClick() : void 
   {
-    console.log(`clicked ${this.content}`)
+    this.props.onClick(this.props.id, Square.next)
     
-    this.content = this.clicked ?  this.props.value : "X"
-    this.clicked = !this.clicked
+    if (!this.Clicked)
+    {
+      this.Clicked = !this.Clicked
+      switch (Square.next)
+      {
+        case EXO.X:
+          this.Content = "X"
+          Square.next = EXO.O
+          break
+        case EXO.O:
+          this.Content = "O"
+          Square.next = EXO.X
+          break
+        default:
+          console.error("not O or X")
+          break
+      }
+    }
   }
 
   render(): React.ReactNode {
     return <>
         <button className="square" onClick={this.handleClick}>
-          {this.content}
+          {this.Content}
         </button>
       </>
   }
