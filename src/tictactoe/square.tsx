@@ -31,11 +31,11 @@ export default class Square extends React.Component<IProperties, IState>
     this.setState(state => {return {clicked: val}})
   }
 
-  constructor(properties: IProperties)
+  constructor(props: IProperties)
   {
-    super(properties)
+    super(props)
     this.state = {
-      content:properties.value.toString(),
+      content:props.value.toString(),
       clicked:false
     }
     // events:
@@ -45,8 +45,9 @@ export default class Square extends React.Component<IProperties, IState>
   handleClick() : void 
   {
     console.log(`clicked ${this.content}`)
+    
+    this.content = this.clicked ?  this.props.value : "X"
     this.clicked = !this.clicked
-    this.content = this.clicked ? "X" : "O"
   }
 
   render(): React.ReactNode {
