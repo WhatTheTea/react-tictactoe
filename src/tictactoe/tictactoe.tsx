@@ -1,16 +1,16 @@
 import React from "react"
 import Square from "./square"
+import { EXO } from "./square"
 import "./tictactoe.css"
 
 interface IProps
 {}
 interface IState
 {
-  squares: string[][]
+  squares: EXO[]
 }
 export default class TicTacToe extends React.Component<IProps, IState>
 {
-    private square_count: number = 1
     private get Squares() 
     {
       return this.state.squares
@@ -20,28 +20,35 @@ export default class TicTacToe extends React.Component<IProps, IState>
     {
       super(props)
       this.state = {
-          squares : Array(3).fill(Array<string>(3).fill(''))
+          squares : Array<EXO>(9)
         }
+      
+      this.onSquareClick = this.onSquareClick.bind(this)
     }
 
     render(): JSX.Element {
         return <>
         <div className="board-row">
-          <Square value={this.Squares[0][0]} />
-          <Square value={this.Squares[0][1]} />
-          <Square value={this.Squares[0][2]} />
+          <Square id = {0} onClick={this.onSquareClick}/>
+          <Square id = {1} onClick={this.onSquareClick} />
+          <Square id = {2} onClick={this.onSquareClick} />
         </div>
         <div className="board-row">
-          <Square value={this.Squares[1][0]} />
-          <Square value={this.Squares[1][1]} />
-          <Square value={this.Squares[1][2]} />
+          <Square id = {3}  onClick={this.onSquareClick} />
+          <Square id = {4}  onClick={this.onSquareClick} />
+          <Square id = {5}  onClick={this.onSquareClick}/>
         </div>
         <div className="board-row">
-          <Square value={this.Squares[2][0]} />
-          <Square value={this.Squares[2][1]} />
-          <Square value={this.Squares[2][2]} />
+          <Square id = {6}  onClick={this.onSquareClick} />
+          <Square id = {7}  onClick={this.onSquareClick} />
+          <Square id = {8}  onClick={this.onSquareClick} />
         </div>
       </>
+    }
+
+    onSquareClick(id : number, xo : EXO) : void 
+    {
+      
     }
 }
 
